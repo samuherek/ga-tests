@@ -24,6 +24,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+        with:
+          repository: samuherek/homebrew-tap
+          ref: 'main'
+          token:  ${{ secrets.GH_PAT }}
+      - name: commands 
+        run: ls -la
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -31,21 +37,6 @@ jobs:
 
       - name: Echo tests
         run: echo "$HOME workld"
-
-      - name: HB tests
-        run: |
-          VERSION=$(echo $GITHUB_REF_NAME | cut -c 2-)
-          FILE="blank.yml"
-          FFF=$(cat .github/workflows/$FILE | awk '{ print $1 }')
-          MAC_ARM_URL="https://github.com/${{ github.repository }}/releases/download/${VERSION}/dips-${VERSION}-aarch64-apple-darwin.tar.gz"
-          MAC_ARM_SHA256=$(echo "dips-${VERSION}-aarch64-apple-darwin.tar.gz.sha256" | awk '{ print $1 }')
-          echo "$FFF"
-          echo "$MAC_ARM_URL"
-          echo "$VERSION"
-          echo $VERSION
-          echo VERSION
-          echo "${VERSION}"
-
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
